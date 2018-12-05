@@ -25,21 +25,8 @@ export default class CocktailForm extends React.Component{
       }
       return {...prop, [e.target.name]: e.target.value}
     })
-    this.setState({proportions: newDrink}, console.log(this.state))
+    this.setState({proportions: newDrink})
   }
-
-
-  // inputChange = (e) => {
-  //   console.log(e.target.value)
-  //     if (["ingredient_name", "amount"].includes(e.target.name) ) {
-  //     let cocktailProportions = [...this.state.proportions]
-  //
-  //     cocktailProportions[e.target.dataset.id][e.target.name] = e.target.value
-  //     this.setState(this.state.proportions, () => console.log(this.state.proportions))
-  //   } else {
-  //     this.setState({[e.target.name]: e.target.value} , console.log(this.state))
-  //   }
-  // }
 
 
   clickHandler = (e) => {
@@ -66,9 +53,10 @@ export default class CocktailForm extends React.Component{
 
   render(){
     return(
-      <div>
+      <div className="column">
+      <div className='ui segment'>
         <h1>Create a Cocktail</h1>
-        <form onSubmit={(e) => this.props.submit(e, this.state)}>
+        <form className='ui form' onSubmit={(e) => this.props.submit(e, this.state)}>
           Name:
           <input type="text" name="name" value={this.state.name} onChange={this.inputChange}/>
           <br />
@@ -80,58 +68,10 @@ export default class CocktailForm extends React.Component{
           <br />
           <button onClick={(e) => this.clickHandler(e)}>Add proportions</ button>
             {this.addProportion()}
-          <button type="submit" >Submit</button>
+          <button className='ui button' type="submit" >Submit</button>
         </form>
+        </div>
       </div>
     )
   }
-  //
-  // clickHandler = (e) => {
-  //   e.preventDefault()
-  //   this.setState({
-  //     proportions: [...this.state.proportions, [{ingredient_name: "", amount: ""}]]
-  //   })
-  // }
-  // handleChange = (e) => {
-  //   console.log(e.value)
-  //     if (["ingredient_name", "amount"].includes(e.target.className) ) {
-  //     let cocktailProportions = [...this.state.proportions]
-  //     cocktailProportions[e.target.dataset.id][e.target.className] = e.target.value
-  //     this.setState(this.state.proportions, () => console.log(this.state))
-  //   } else {
-  //     this.setState({ [e.target.name]: e.target.value }, console.log)
-  //   }
-  // }
-  //
-  // render(){
-  //
-  //
-  //
-  //   return(
-  //     <form onChange={this.handleChange} onSubmit={(e) => this.props.submit(e, this.state)}>
-  //     Name:
-  //           <input type="text" name="name" id="name" value={this.state.name}/>
-  //            <br />
-  //            Description:
-  //            <textarea type="text" name="description" id="description" value={this.state.description} />
-  //            <br />
-  //            Instructions:
-  //            <textarea type="text" name="instructions" id="instructions" value={this.state.instructions}/>
-  //            <br />
-  //            <button onClick={(e) => this.clickHandler(e)}>Add proportions</ button>
-  //               {this.state.proportions.map((proportions, idx) => {
-  //                 let ingredientId= `ingredient_name-${idx}`, amountId= `amount-${idx}`
-  //                   return (
-  //                     <div key={idx}>
-  //                     Ingredient Name:
-  //                     <input className="ingredient_name" data-id={idx} name={ingredientId} type="text" value={this.state.proportions.ingredient_name} />
-  //                     <br />
-  //                     Quantity:
-  //                     <input className="amount" type="text" data-id={idx} name={amountId} value={this.state.proportions.amount} />
-  //                     </div>
-  //                   )})}
-  //            <button type="submit" >Submit</button>
-  //     </form>
-  //   )
-  // }
 }

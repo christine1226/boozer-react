@@ -32,44 +32,51 @@ export default class CocktailContainer extends React.Component{
     console.log(obj)
 
     e.preventDefault()
-    fetch('http://localhost:3000/api/v1/cocktails/', {
+    fetch('http://localhost:3000/api/v1/cocktails', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        id: obj.id,
         name: obj.name,
         description: obj.description,
         instructions: obj.instructions,
+
       })
     })
     .then(res => res.json())
-    .then(newCocktail => this.setState({
-      allCocktails: [...this.state.allCocktails, newCocktail]
-    }, () => (this.handlePatch(newCocktail, obj))))
+    .then(newCocktail => (this.handleIngredient(newCocktail, obj)))
   }
 
-  handlePatch = (newCocktail, obj) => {
+
+
+  handleIngredient = (newCocktail, obj) => {
     // let mappedProp = obj.proportions.ingredient_name.map(drink => drink)
-  fetch('http://localhost:3000/api/vi/cocktails/'+newCocktail.id, {
-    method: 'PATCH',
+  fetch('http://localhost:3000/api/v1/ingredients', {
+    method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({
-      proportions: [
-        {
-          ingredient_name: obj.proportions.ingredient_name,
-          amount: obj.proportions.amount
-        }
-      ]
+      name: obj.proportions[0].ingredient_name
     })
-  }).then(res => res.json())
-  .then(console.log)
+  })
+  .then(res => res.json())
+  .then(json => this.handleProportion(json, newCocktail, obj))
   }
 
-  handleDelete = (obj) => {
-    console.log(obj)
-    this.state.allCocktails.filter(e => {
-      return e !== obj})
+
+  handleProportion = (ingredient, cocktail, obj) => {
+    console.log(ingredient, cocktail, obj)
+    // let mappedProp = obj.proportions.ingredient_name.map(drink => drink)
+    fetch('http://localhost:3000/api/v1/proportions', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        amount: obj.proportions[0].amount,
+        cocktail_id: cocktail.id,
+        ingredient_id: ingredient.id
+      })
+    }).then(res => res.json())
+    .then(drink => this.setState({ allCocktails: [...this.state.allCocktails, cocktail]}))
   }
+
 
 
   render(){
@@ -79,23 +86,12 @@ export default class CocktailContainer extends React.Component{
     })
     // console.log(cocktailArr)
     return(
-      <div>
-        {this.state.clickedCocktail && <CocktailForm submit={this.handleSubmit} />}
+      <div className='ui three column grid'>
+      <div id='list'>{cocktailArr}</div>
+        <CocktailForm submit={this.handleSubmit} />
         {this.state.clickedCocktail && <CocktailDisplay cocktail={this.state.clickedCocktail} />}
-        {cocktailArr}
       </div>
     )
   }
 
-
-
 }
-// ReactDOM.render((
-//   <Router>
-//     <div>
-//       <Route exact path="/" render={CocktailList} />
-//       <Route exact path='/id' render={CocktailDisplay} />
-//     </div>
-//   </Router>),
-//   document.getElementById('root')
-// );

@@ -30,24 +30,34 @@
     transform: rotate(360deg);
   }
 }
+/*
+ .cocktailList {
+   width: 23%;
+   background-color: tan;
+   text-align: left;
+   overflow: scroll;
+   height: 100%;
+ }
+ .item {
+   border: solid;
+   height: 45px;
+   font-family: 'PT Sans Narrow', sans-serif;
+   font-size: 20px;
+ }
+ .title {
+   border: solid;
+   padding: 20px;
+ }
+ .drinkDisplay{
+   float: right;
+ } */
 
-.cocktailList {
-  width: 23%;
-  background-color: tan;
-  text-align: left;
-  overflow-y: scroll;
-  height: 100%;
-}
-.item {
-  border: solid;
-  height: 45px;
-  font-family: 'PT Sans Narrow', sans-serif;
-  font-size: 20px;
-}
-.title {
-  border: solid;
-  padding: 20px;
-}
-.drinkDisplay {
-  
-}
+ .main-wrapper {
+   max-width: 80%;
+   margin: auto;
+ }
+
+ #list {
+   height: 850px;
+   overflow: scroll;
+ }
